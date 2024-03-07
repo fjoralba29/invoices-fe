@@ -18,17 +18,23 @@ export default {
     }
   },
   mounted() {
-    const isToken = localStorage.getItem('token')
-    console.log(isToken)
-    this.isLoggedIn = isToken
+    this.checkToken()
    
+  },
+  watch: {
+    '$route'() {
+      this.checkToken();
+    }
   },
 
   methods: {
+    checkToken() {
+      this.isLoggedIn = !!localStorage.getItem('token');
+    },
     logout() {
       localStorage.removeItem('token'); 
       localStorage.removeItem('id');
-      this.isLoggedIn = false
+      this.isLoggedIn = false;
       this.$router.push('/log-in');
     },
    
